@@ -1,0 +1,295 @@
+@font-face {
+  font-family: 'Source Serif Pro', serif; }
+@font-face {
+  font-family: 'AliasMedium';
+  src: url("/fonts/BorgiaPro-Regular-webfont.woff") format("woff"); }
+@font-face {
+  font-family: 'AliasRegular';
+  src: url("/fonts/BorgiaPro-Regular-webfont.woff") format("woff"); }
+@font-face {
+  font-family: 'inputMonoCompressed';
+  src: url("/fonts/VeraMono.ttf") format("truetype"); }
+@font-face {
+  font-family: 'inputMonoLight';
+  src: url("/fonts/InputMono-Light.ttf") format("truetype"); }
+html, body {
+  height: 100%;
+  margin: 0; }
+
+h2 {
+  font-family: 'AliasRegular';
+  font-size: 28px;
+  line-height: 38px; }
+
+p {
+  font-family: 'inputMonoCompressed';
+  line-height: 22px;
+  font-size: 14px; }
+
+a {
+  text-decoration: none; }
+
+header {
+  position: relative;
+  z-index: 999;
+  background: #000;
+  flex: 0 1 auto;
+  border-bottom: solid 1px #595959; }
+  header h1 {
+    font-family: 'AliasRegular', serif;
+    font-size: 2.6em;
+    color: #fff;
+    margin: 0;
+    padding-left: 20px; }
+    header h1 span {
+      text-transform: uppercase;
+      font-family: 'inputMonoCompressed', monospace; }
+
+footer {
+  width: 100%;
+  background-color: #000;
+  flex: 0 1 auto;
+  border-top: solid 1px #595959;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 0; }
+  footer ul {
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+    padding: 20px 0; }
+    footer ul li.state-link {
+      display: flex;
+      align-items: center;
+      cursor: pointer; }
+      footer ul li.state-link span.tickbox {
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        margin-bottom: 2px;
+        margin-right: 5px;
+        background-color: #595959; }
+        footer ul li.state-link span.tickbox.completed {
+          background-color: #0f992f; }
+      footer ul li.state-link p {
+        display: inline-block;
+        background: #000;
+        border: none;
+        font-family: 'inputMonoCompressed', serif;
+        transition: none; }
+        footer ul li.state-link p.active {
+          color: #fff; }
+        footer ul li.state-link p.inactive-completed {
+          color: #8e8e8e; }
+        footer ul li.state-link p.inactive {
+          color: #595959; }
+    footer ul li.divider {
+      color: #595959;
+      font-family: 'inputMonoCompressed', serif;
+      font-size: 12px;
+      padding: 0 25px; }
+    footer ul li.submit-bot.active button[type=button].submit-bot-button {
+      background: #000;
+      color: #fff;
+      border-left: solid 1px #c4c4c4;
+      border-top: solid 1px #c4c4c4;
+      border-right: solid 1px #5b5b5b;
+      border-bottom: solid 1px #5b5b5b;
+      cursor: pointer;
+      padding: 10px;
+      font-family: 'inputMonoCompressed', serif;
+      transition: none; }
+      footer ul li.submit-bot.active button[type=button].submit-bot-button:hover {
+        color: #000;
+        background: #939393; }
+      footer ul li.submit-bot.active button[type=button].submit-bot-button:active {
+        background: #fff; }
+      footer ul li.submit-bot.active button[type=button].submit-bot-button:focus {
+        outline: 0; }
+    footer ul li.submit-bot.inactive button[type=button].submit-bot-button {
+      background: #000;
+      color: #3f3f3f;
+      border-left: solid 1px #3f3f3f;
+      border-top: solid 1px #3f3f3f;
+      border-right: solid 1px #3f3f3f;
+      border-bottom: solid 1px #3f3f3f;
+      cursor: not-allowed;
+      padding: 10px;
+      font-family: 'inputMonoCompressed', serif;
+      transition: none; }
+      footer ul li.submit-bot.inactive button[type=button].submit-bot-button:focus {
+        outline: 0; }
+
+.loader {
+  position: absolute;
+  width: 80px;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  transform: translateX(-50%); }
+
+body#introPage {
+  height: 100%;
+  display: flex;
+  flex-flow: column; }
+
+main#intro_content {
+  position: relative;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  border-top: none;
+  height: 100%;
+  overflow: hidden; }
+  main#intro_content video {
+    position: relative;
+    width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    z-index: 1; }
+
+body.canvasPage {
+  height: 100%;
+  display: flex;
+  flex-flow: column; }
+
+main.canvasMain {
+  height: 100%;
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+  background-color: black; }
+  main.canvasMain .stage-container {
+    position: relative;
+    height: 100%; }
+    main.canvasMain .stage-container canvas#stage {
+      position: absolute;
+      height: 100%;
+      width: 100%; }
+
+nav.text-content-nav {
+  padding-top: 20px; }
+nav.footer-nav {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end; }
+nav button[type=button].link {
+  background: #000;
+  color: #fff;
+  border-left: solid 1px #c4c4c4;
+  border-top: solid 1px #c4c4c4;
+  border-right: solid 1px #5b5b5b;
+  border-bottom: solid 1px #5b5b5b;
+  cursor: pointer;
+  padding: 10px;
+  font-family: 'inputMonoCompressed', serif;
+  transition: none; }
+  nav button[type=button].link:hover {
+    color: #000;
+    background: #939393; }
+  nav button[type=button].link:active {
+    background: #fff; }
+  nav button[type=button].link:focus {
+    outline: 0; }
+
+div.draggable-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none; }
+  div.draggable-container div.draggable-content {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    border: solid 1px #595959; }
+    div.draggable-container div.draggable-content.visible {
+      display: block; }
+    div.draggable-container div.draggable-content.invisible {
+      display: none; }
+    div.draggable-container div.draggable-content div.dragbar {
+      width: 400px;
+      height: 30px;
+      pointer-events: visible;
+      box-sizing: border-box;
+      border: solid 5px #000;
+      cursor: pointer;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      div.draggable-container div.draggable-content div.dragbar:active {
+        cursor: grabbing; }
+      div.draggable-container div.draggable-content div.dragbar ul.drag-pattern {
+        display: grid;
+        width: 90%;
+        height: 100%;
+        grid-template-columns: repeat(50, 3px [col-start]);
+        grid-template-rows: repeat(4, 3px [col-start]);
+        grid-column-gap: 4px;
+        grid-row-gap: 2px;
+        pointer-events: visible; }
+        div.draggable-container div.draggable-content div.dragbar ul.drag-pattern:active {
+          cursor: grabbing; }
+        div.draggable-container div.draggable-content div.dragbar ul.drag-pattern li {
+          width: 100%;
+          height: 100%;
+          background-color: #595959;
+          pointer-events: none; }
+      div.draggable-container div.draggable-content div.dragbar button[type=button].minimize {
+        margin-left: 7px;
+        margin-bottom: 2px;
+        height: 4px;
+        width: 25px;
+        background: #595959;
+        cursor: pointer;
+        border: none;
+        border-radius: 0; }
+        div.draggable-container div.draggable-content div.dragbar button[type=button].minimize:hover {
+          background: #939393;
+          border: none; }
+        div.draggable-container div.draggable-content div.dragbar button[type=button].minimize:active {
+          background: #fff; }
+        div.draggable-container div.draggable-content div.dragbar button[type=button].minimize:focus {
+          outline: 0; }
+    div.draggable-container div.draggable-content div.text-content {
+      width: 400px;
+      height: 340px;
+      background-color: black;
+      pointer-events: visible;
+      box-sizing: border-box;
+      border: solid 5px #000;
+      border-top: none;
+      padding: 20px;
+      color: white;
+      overflow: auto; }
+      div.draggable-container div.draggable-content div.text-content#intro {
+        height: 450px; }
+      div.draggable-container div.draggable-content div.text-content .cnt.visible {
+        display: block; }
+      div.draggable-container div.draggable-content div.text-content .cnt.invisible {
+        display: none; }
+      div.draggable-container div.draggable-content div.text-content .cnt h2 {
+        padding-top: 5px;
+        padding-bottom: 30px; }
+      div.draggable-container div.draggable-content div.text-content .cnt p {
+        width: 95%; }
+    div.draggable-container div.draggable-content div.text-content::-webkit-scrollbar-track {
+      width: 5px;
+      background-color: #000; }
+    div.draggable-container div.draggable-content div.text-content::-webkit-scrollbar {
+      width: 5px;
+      background-color: #000; }
+    div.draggable-container div.draggable-content div.text-content::-webkit-scrollbar-thumb {
+      background-color: #595959; }
+    div.draggable-container div.draggable-content div.text-content:hover::-webkit-scrollbar-thumb {
+      background-color: #939393; }
+
+.col1 {
+  grid-column-start: col1; }
+
+.col2 {
+  grid-column-start: col2; }
+
+/*# sourceMappingURL=main.css.map */
