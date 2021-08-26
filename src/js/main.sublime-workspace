@@ -1,0 +1,454 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"c",
+				"cover\tbackground-size"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"packag",
+				"Package Control: Install Package"
+			],
+			[
+				"indent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"dired",
+				"dired"
+			],
+			[
+				"reindent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"rein",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"install pac",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"sideb",
+				"View: Toggle Open Files in Side Bar"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/aux/audio_player/src/AudioPlayer.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/AudioPlayer.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/Mole.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/aux/audio_player/src/App.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/LiveScore.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/Footer.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/GameEnd.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/Button.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/H2.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/H1.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/aux/audio_player/src/main.js",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/settings.js",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/Headline1.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/Circle.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/store.js",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/ProgressBar.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/public/global.css",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/game.js",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/Text.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/Canvas.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/src/Rect.svelte",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/rollup.config.js",
+		"/Users/m/Documents/__PROJECTS/2019/ira-bots-remixer-microsite/src/js/field.js",
+		"/Users/m/Documents/__PROJECTS/2019/triton-trisus-in-the-refinery-microsite/src/js/main.js",
+		"/Users/m/Documents/__PROJECTS/2021/whac-a-mole/app/scripts/pixi.min.js",
+		"/Users/m/Documents/_DIGITAL/_webdev/svelte/1_basic_app/rollup.config.js",
+		"/Users/m/Documents/_DIGITAL/_webdev/svelte/1_basic_app/src/App.svelte",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/opencv_with_node/node_modules/opencv/src/Matrix.cc",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/opencv_with_node/node_modules/opencv/examples/motion-track.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/project/bianca_p5js_project/public/random_video_player/package.json",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/project/bianca_p5js_project/public/random_video_player/index.html",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/project/bianca_p5js_project/public/delayed_video_player/js/settings.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/project/bianca_p5js_project/public/delayed_video_player/js/delayed_video_player.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/project/bianca_p5js_project/public/delayed_video_player/index.html",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/opencv_with_node/node_modules/opencv/examples/detect-shapes.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/opencv_with_node/node_modules/opencv/examples/contours.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/opencv_with_node/node_modules/opencv/test/unit.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/opencv_with_node/node_modules/opencv/smoke/smoketest.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/initial_processingJs_sketch/web-export/processing.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/opencv_with_node/node_modules/opencv/test/memory.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/webcam_in_browser/webcam_web_player/js/main.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/webcam_in_browser/webcam_web_player/js/webcam_video_player.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/opencv_with_node/package.json",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/opencv_with_node/lib/socket.io.min.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/webcam_in_browser/webcam_web_player/js/settings.js",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/initial_p5_sketch/initial_p5_sketch.pde",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/webcam_in_browser/webcam_web_player/package.json",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/webcam_in_browser/webcam_web_player/index.html",
+		"/Users/m/Documents/__PROJECTS/_COMMERCIAL/2021/bianca_video_project/code/delayed_video_player/webcam_web_player/index.html",
+		"/Users/m/.Trash/1 22-20-34-815.jpg"
+	],
+	"find":
+	{
+		"height": 66.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 48.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "main.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Mole",
+				"whac-a-mole/app/src/Mole.svelte"
+			],
+			[
+				"AudioButt",
+				"whac-a-mole/app/src/AudioButton.svelte"
+			],
+			[
+				"setti",
+				"whac-a-mole/app/src/settings.js"
+			],
+			[
+				"GameSTart",
+				"whac-a-mole/app/src/GameStart.svelte"
+			],
+			[
+				"Game",
+				"whac-a-mole/app/src/Game.svelte"
+			],
+			[
+				"Settings",
+				"whac-a-mole/app/src/settings.js"
+			],
+			[
+				"GameStart",
+				"whac-a-mole/app/src/GameStart.svelte"
+			],
+			[
+				"GameEnd",
+				"whac-a-mole/app/src/GameEnd.svelte"
+			],
+			[
+				"SEtt",
+				"whac-a-mole/app/src/settings.js"
+			],
+			[
+				"moleGener",
+				"whac-a-mole/app/src/moleGenerator.js"
+			],
+			[
+				"Player",
+				"whac-a-mole/app/src/AudioPlayer.svelte"
+			],
+			[
+				"Audio",
+				"audio_player/src/AudioPlayer.svelte"
+			],
+			[
+				"gameEnd",
+				"whac-a-mole/app/src/GameEnd.svelte"
+			],
+			[
+				"H2",
+				"whac-a-mole/app/src/H2.svelte"
+			],
+			[
+				"gameSTart",
+				"whac-a-mole/app/src/GameStart.svelte"
+			],
+			[
+				"global",
+				"whac-a-mole/dist/global.css"
+			],
+			[
+				"setting",
+				"whac-a-mole/app/src/settings.js"
+			],
+			[
+				"Audi",
+				"audio_player/src/AudioPlayer.svelte"
+			],
+			[
+				"settin",
+				"whac-a-mole/app/src/settings.js"
+			],
+			[
+				"gameStart",
+				"whac-a-mole/app/src/GameStart.svelte"
+			],
+			[
+				"settings",
+				"whac-a-mole/app/src/settings.js"
+			],
+			[
+				"Audip",
+				"whac-a-mole/app/src/AudioPlayer.svelte"
+			],
+			[
+				"GameSVelte",
+				"whac-a-mole/app/src/GameStart.svelte"
+			],
+			[
+				"audoP",
+				"whac-a-mole/app/src/AudioPlayer.svelte"
+			],
+			[
+				"AudoPla",
+				"whac-a-mole/app/src/AudioPlayer.svelte"
+			],
+			[
+				"AudioBu",
+				"whac-a-mole/app/src/AudioButton.svelte"
+			],
+			[
+				"game",
+				"whac-a-mole/app/src/Game.svelte"
+			],
+			[
+				"app",
+				"audio_player/src/App.svelte"
+			],
+			[
+				"sett",
+				"whac-a-mole/app/src/settings.js"
+			],
+			[
+				"AudioPl",
+				"whac-a-mole/app/src/AudioPlayer.svelte"
+			],
+			[
+				"audoPl",
+				"audio_player/src/AudioPlayer.svelte"
+			],
+			[
+				"mole",
+				"whac-a-mole/app/src/Mole.svelte"
+			],
+			[
+				"audio",
+				"whac-a-mole/app/src/AudioPlayer.svelte"
+			],
+			[
+				"audip",
+				"whac-a-mole/app/src/AudioPlayer.svelte"
+			],
+			[
+				"audiopl",
+				"audio_player/src/AudioPlayer.svelte"
+			],
+			[
+				"store",
+				"whac-a-mole/app/src/store.js"
+			],
+			[
+				"gameSt",
+				"whac-a-mole/app/src/GameStart.svelte"
+			],
+			[
+				"audo",
+				"audio_player/src/AudioPlayer.svelte"
+			],
+			[
+				"audop",
+				"whac-a-mole/app/src/AudioPlayer.svelte"
+			],
+			[
+				"readm",
+				"README.md"
+			],
+			[
+				"readme",
+				"README.md"
+			],
+			[
+				"livesco",
+				"app/src/LiveScore.svelte"
+			],
+			[
+				"butt",
+				"app/src/Button.svelte"
+			],
+			[
+				"h2",
+				"app/src/H2.svelte"
+			],
+			[
+				"h",
+				"app/src/H1.svelte"
+			],
+			[
+				"Foo",
+				"app/src/Footer.svelte"
+			],
+			[
+				"H1",
+				"app/src/H1.svelte"
+			],
+			[
+				"progress",
+				"app/src/ProgressBar.svelte"
+			],
+			[
+				"",
+				"code/webcam_in_browser/webcam_web_player/js/webcam_video_player.js"
+			],
+			[
+				"main",
+				"code/webcam_in_browser/webcam_web_player/js/main.js"
+			],
+			[
+				"index",
+				"code/webcam_in_browser/webcam_web_player/index.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 311.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

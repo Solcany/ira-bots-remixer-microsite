@@ -31,7 +31,7 @@ window.onload = function() {
 	}
 
 	else if(body.id === "choosePhotoPage") {
-		const canvas = document.getElementById("stage")
+		const canvas = document.getElementById("stage");
 		const canvasWidth = canvas.clientWidth;
 		const canvasHeight = canvas.clientHeight;
 		const avatarDiameter = 40;
@@ -73,7 +73,6 @@ window.onload = function() {
 			loader.add( "avatar" + range[i].toString(), "/img/avatar/" + range[i] + ".png")
 		}
 		loader.add("placeholder", "/img/avatar/empty.png");
-		loader.add("glitchSound", '/audio/glitch-sound.mp3');
 
 		var renderer = PIXI.autoDetectRenderer(canvasWidth, canvasHeight,
 		  {
@@ -99,9 +98,9 @@ window.onload = function() {
 	 	bot_names = bot_names.data;
 	 	bot_bios = bot_bios.data;
 
-	 	var inputMonoCompressedFont = new Font();
-	 		inputMonoCompressedFont.fontFamily = "inputMonoCompressed"
-	 		inputMonoCompressedFont.src ="/fonts/InputMonoCompressed-Regular.ttf"
+	 	var font = new Font();
+	 		font.fontFamily = "Plex"
+	 		font.src ="./fonts/IBMPlexMono-Regular.ttf"
 
 
 		// global
@@ -130,7 +129,7 @@ window.onload = function() {
 
 		var WIPstyle = new PIXI.TextStyle({
 				align: 'center',
-			    fontFamily: inputMonoCompressedFont.fontFamily,
+			    fontFamily: font.fontFamily,
 			    fontSize: 34,
 			    fill: '#b2b2b2'
 		});
@@ -371,7 +370,6 @@ window.onload = function() {
 					let NEXT_STATE = "botnet";
 					CURRENT_STATE = NEXT_STATE;
 					enterNewState(CURRENT_STATE);
-
 				}
 
 
@@ -379,7 +377,6 @@ window.onload = function() {
 					exitCurrentState(CURRENT_STATE);
 					let NEXT_STATE = "chooseCountry";
 					CURRENT_STATE = NEXT_STATE;
-
 					enterNewState(CURRENT_STATE);
 				}
 
@@ -387,9 +384,6 @@ window.onload = function() {
 			/*–– remove loader gif from DOM––*/
 				let gifParent = document.getElementById("choosePhoto");
 				let loaderGif = document.querySelector(".loader");
-
-				const glitchSound = resources['glitchSound'].sound;
-					  glitchSound.volume = 0.0;
 
 				// stage.filters = [new PIXI.filters.CRTFilter({curvature: 0, lineWidth: 0, lineContrast: 0, verticalLine: false, noise: 0.1, vignetting: 0.3 })]
 
@@ -438,16 +432,26 @@ window.onload = function() {
 								texture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 								let avatarPosition = {x: avatarPositions[i].x,
 													  y: avatarPositions[i].y }
-								addAvatar({stage: stage, renderer: renderer, ticker: ticker}, photosContainer, texture, avatarPosition, {diam: avatarDiameter, hoverDiam: avatarHoverDiameter}, glitchSound, setNextStateChooseName);
+								addAvatar(
+									{stage: stage, renderer: renderer, ticker: ticker}, 
+									photosContainer, 
+									texture, 
+									avatarPosition, 
+									{diam: avatarDiameter, hoverDiam: avatarHoverDiameter}, 
+									setNextStateChooseName);
 							}
 							let userAvatarTexture = resources.placeholder.texture;
 								userAvatarTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
-							addAvatar({stage: stage, renderer: renderer, ticker: ticker}, stage,
-									  userAvatarTexture,
-									  { x: userAvatarCircle.x, y: userAvatarCircle.y },
-									  {diam: userAvatarDiameter, hoverDiam: userAvatarDiameter+10},null, null, "mainAvatar" )
-							// let last = photoStage.children.length -1;
-							// stage.getChildByName("circlesContainer").alpha = 0;
+
+							addAvatar(
+								{stage: stage, renderer: renderer, ticker: ticker}, 
+								stage,
+								userAvatarTexture,
+								{ x: userAvatarCircle.x, y: userAvatarCircle.y },
+								{diam: userAvatarDiameter, hoverDiam: userAvatarDiameter+10},
+								null,
+								 "mainAvatar" )
+
 							stage.addChild(circlesContainer);
 							stage.addChild(photosContainer);
 
@@ -461,13 +465,13 @@ window.onload = function() {
 																					 namesPackingDiameter ) // cahnge
 							var style = new PIXI.TextStyle({
 									align: 'center',
-								    fontFamily: inputMonoCompressedFont.fontFamily,
+								    fontFamily: font.fontFamily,
 								    fontSize: 12,
 								    fill: '#595959'
 							});
 							var botNameStyle = new PIXI.TextStyle({
 									align: 'center',
-								    fontFamily: inputMonoCompressedFont.fontFamily,
+								    fontFamily: font.fontFamily,
 								    fontSize: 34,
 								    fill: '#b2b2b2'
 							});
@@ -482,7 +486,7 @@ window.onload = function() {
 
 								var txt = new PIXI.Text(bot_names[i].user_display_name,{
 									align: 'center',
-								    fontFamily: inputMonoCompressedFont.fontFamily,
+								    fontFamily: font.fontFamily,
 								    fontSize: 12,
 								    fill: '#595959'})
 									txt.anchor.set(0.5);
@@ -520,7 +524,6 @@ window.onload = function() {
 														new PIXI.filters.PixelateFilter(10)]
 
 										ticker.add(glitch)
-										glitchSound.play();
 
 										let seed = 1; //Math.Random() * 100;
 										function glitch() {
@@ -558,13 +561,13 @@ window.onload = function() {
 																					 biosPackingDiameter ) // cahnge
 							var style = new PIXI.TextStyle({
 									align: 'center',
-								    fontFamily: inputMonoCompressedFont.fontFamily,
+								    fontFamily: font.fontFamily,
 								    fontSize: 12,
 								    fill: '#595959'
 							});
 							var botBioStyle = new PIXI.TextStyle({
 									align: 'center',
-								    fontFamily: inputMonoCompressedFont.fontFamily,
+								    fontFamily: font.fontFamily,
 								    fontSize: 18,
 								    wordWrap: true,
 								    wordWrapWidth: 350,
@@ -581,7 +584,7 @@ window.onload = function() {
 
 								var txt = new PIXI.Text(bot_bios[i].user_profile_description,{
 									align: 'center',
-								    fontFamily: inputMonoCompressedFont.fontFamily,
+								    fontFamily: font.fontFamily,
 								    fontSize: 12,
 								    fill: '#595959',
 									wordWrap: true,
@@ -620,7 +623,6 @@ window.onload = function() {
 																						green:[4,4]}),
 														new PIXI.filters.PixelateFilter(10)]
 										ticker.add(glitch)
-										glitchSound.play();
 
 										let seed = 1; //Math.Random() * 100;
 										function glitch() {
@@ -847,7 +849,14 @@ function toggleContentOnClick(button, content) {
 	}
 
 
-	function addAvatar(stageANDrenderer, parentContainer, tex, position, diamANDHoverDiam,soundEffect, nextState, name=null) {
+	function addAvatar(
+		stageANDrenderer, 
+		parentContainer, 
+		tex, 
+		position, 
+		diamANDHoverDiam, 
+		nextState, 
+		name=null) {
 	    var x = position.x;
 	    var y = position.y;
 	    var diam = diamANDHoverDiam.diam;
@@ -855,8 +864,6 @@ function toggleContentOnClick(button, content) {
 	    var stage = stageANDrenderer.stage;
 	    var renderer = stageANDrenderer.renderer;
 	    var ticker = stageANDrenderer.ticker;
-
-		// var outlineFilterBlue = new PIXI.filters.OutlineFilter(2, 0x99ff99);
 
 	    var avatar = new PIXI.Sprite(tex);
 	    avatar.interactive = true;
@@ -906,7 +913,6 @@ function toggleContentOnClick(button, content) {
 	    let previousTex;
 
 	    function hoverEff() {
-	    	// this.mask.scale.set(1.5);
 	    		this.scale.set(1.5);
 	    }
 
@@ -920,7 +926,6 @@ function toggleContentOnClick(button, content) {
 								new PIXI.filters.PixelateFilter(10)]
 
 				ticker.add(glitch)
-				if(soundEffect != null) soundEffect.play()
 
 				let seed = 1;
 				function glitch() {
@@ -939,8 +944,6 @@ function toggleContentOnClick(button, content) {
 
 					}
 				}
-
-	    		// renderer.render(stage);
 	    }
 
 	    function setTempMainAvatarToThis() {
@@ -949,9 +952,6 @@ function toggleContentOnClick(button, content) {
 	    		mainAvatar.setTexture(this.texture)
 	    		this.width = hoverDiam;
 	    		this.height = hoverDiam * aspectR;
-
-	    		// this.mask.graphicsData.radius = 60;
-	    		// renderer.render(stage);
 	    }
 
 	    function resetMainAvatar() {
@@ -961,13 +961,11 @@ function toggleContentOnClick(button, content) {
 	    		this.height = avatarHeight;
 	    		mainAvatar.filters = [];
 	    		avatar.filters = [];
-	    		// renderer.render(stage);
 	    }
 
 	    function outlineAvatar() {
 	    	let mainAvatar = stage.getChildByName("mainAvatar")
-	    	// mainAvatar.filters = [new PIXI.filters.OutlineFilter(3, twitterBlue, quality = 1.0)];
-	    	// avatar.filters = [new PIXI.filters.OutlineFilter(3, twitterBlue, quality = 1.0)];
+
 
 	    }
 
