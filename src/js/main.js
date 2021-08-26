@@ -15,6 +15,14 @@ window.onload = function() {
 	var body = document.getElementsByTagName("BODY")[0];
 	var CURRENT_STATE = "choosePhoto";
 
+	
+	document.addEventListener('click', musicPlay);
+	function musicPlay() {
+		let player = document.getElementById("player");
+		player.play();    
+		document.removeEventListener('click', musicPlay);
+	}	 	
+
 	if(body.id === "introPage") {
 		let dragContainer = ".draggable-container";
 		let dragableContent = ".draggable-content";
@@ -61,10 +69,8 @@ window.onload = function() {
 			submitButton.disabled = true;
 
 	 	submitButton.addEventListener('click', function() {
-	 		console.log('fired');
 	 		setNextStateBotnet();
 	 	})
-
 		/* load images */
 		const range = get_randomNumsFromRange(383, avatarsAmount);
 		const loader = PIXI.loader;
@@ -168,6 +174,7 @@ window.onload = function() {
 							if(stage.getChildByName("botBio") != null ) {
 								stage.getChildByName("botBio").alpha = 0.0;
 							}
+
 					} else if(STATE =="chooseName") {
 							stage.getChildByName("namesContainer").interactiveChildren = true;
 							stage.getChildByName("botName").alpha = 1.0;
