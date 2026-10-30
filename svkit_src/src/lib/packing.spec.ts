@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { packCircles, type Circle } from './packing.ts';
+import { packCircles, repackCircles, type Circle } from './packing.ts';
 
 /** Small deterministic PRNG (mulberry32) so failures are reproducible. */
 function seeded(seed: number) {
@@ -47,5 +47,42 @@ describe('packCircles', () => {
 		expect(packCircles({ width: 100, height: 100 }, [], 50, 40, 50, seeded(2)).length).toBeLessThan(
 			2
 		);
+	});
+});
+
+describe('repackCircles', () => {
+	const zone = { x: 400, y: 300, r: 150 };
+	const before = packCircles(size, [zone], 120, 30, 200, seeded(3));
+
+	it('keeps every circle that still fits when the area grows', () => {
+		const bigger = { width: 1000, height: 700 };
+		// shift by the centre offset, as the stage does: positions are kept relative to the centre
+		const shift = (c: Circle) => ({ ...c, x: c.x + 100, y: c.y + 50 });
+		const after = repackCircles(bigger, [shift(zone)], before.map(shift), 30, 200, seeded(4));
+		expect(after.slice(0, before.length)).toEqual(before.map(shift));
+	});
+
+	it('only moves the circles that no longer fit when the area shrinks', () => {
+		const smaller = { width: 600, height: 400 };
+		const shift = (c: Circle) => ({ ...c, x: c.x - 100, y: c.y - 100 });
+		const previous = before.map(shift);
+		const after = repackCircles(smaller, [shift(zone)], previous, 30, 200, seeded(5));
+		const inside = (c: Circle) =>
+			c.x - c.r > 0 && c.y - c.r > 0 && c.x + c.r < smaller.width && c.y + c.r < smaller.height;
+
+		previous.forEach((c, i) => {
+			if (inside(c)) expect(after[i]).toEqual(c);
+		});
+		const placed = after.filter((c): c is Circle => c !== null);
+		for (const c of placed) expect(inside(c)).toBe(true);
+		placed.forEach((a, i) =>
+			placed.slice(i + 1).forEach((b) => expect(overlaps(a, b)).toBe(false))
+		);
+	});
+
+	it('returns one slot per input, placing previously hidden ones when there is room', () => {
+		const after = repackCircles(size, [], [null, null, null], 30, 200, seeded(6));
+		expect(after).toHaveLength(3);
+		expect(after.every((c) => c !== null)).toBe(true);
 	});
 });

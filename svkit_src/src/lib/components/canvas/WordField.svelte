@@ -3,6 +3,8 @@
 		text: string;
 		x: number;
 		y: number;
+		/** False when there was no room for the item in the current window. */
+		placed: boolean;
 	}
 </script>
 
@@ -43,6 +45,7 @@
 			{style}
 			{hoverStyle}
 			{hoverScale}
+			visible={word.placed}
 			hovered={word.text === hovered}
 			onpointerover={() => onhover(word.text)}
 			onpointerout={() => hovered === word.text && onhover(null)}

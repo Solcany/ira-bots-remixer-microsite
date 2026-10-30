@@ -1,6 +1,8 @@
 <script lang="ts">
-	import '@fontsource/ibm-plex-mono/400.css';
-	import '@fontsource/kaisei-tokumin/400.css';
+	// Only the subsets in use: Plex Mono also renders the Cyrillic bot names; the headings are Latin.
+	import '@fontsource/ibm-plex-mono/latin-400.css';
+	import '@fontsource/ibm-plex-mono/cyrillic-400.css';
+	import '@fontsource/kaisei-tokumin/latin-400.css';
 	import '../app.css';
 	import { asset, resolve } from '$app/paths';
 	import BackgroundMusic from '#lib/components/ui/BackgroundMusic.svelte';

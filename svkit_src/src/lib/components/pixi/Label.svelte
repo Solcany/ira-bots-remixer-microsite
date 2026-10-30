@@ -9,6 +9,7 @@
 		y,
 		style,
 		anchor = 0.5,
+		visible = true,
 		hovered = false,
 		hoverStyle,
 		hoverScale = 1,
@@ -22,6 +23,7 @@
 		y: number;
 		style: TextStyleOptions;
 		anchor?: number | PointData;
+		visible?: boolean;
 		hovered?: boolean;
 		/** Merged over `style` while hovered. */
 		hoverStyle?: TextStyleOptions;
@@ -63,6 +65,9 @@
 	});
 	$effect(() => {
 		label.position.set(x, y);
+	});
+	$effect(() => {
+		label.visible = visible;
 	});
 	$effect(() => {
 		label.filters = filters ?? [];

@@ -1,7 +1,7 @@
 import { GlitchFilter, PixelateFilter } from 'pixi-filters';
 import type { Application, Container } from 'pixi.js';
 
-export interface GlitchOptions {
+interface GlitchOptions {
 	/** How many ticker frames the effect lasts. */
 	frames?: number;
 	/** Re-seed the glitch every frame so the slices jump around. */

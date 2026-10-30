@@ -6,6 +6,8 @@
 		texture: Texture;
 		x: number;
 		y: number;
+		/** False when there was no room for the item in the current window. */
+		placed: boolean;
 	}
 </script>
 
@@ -42,6 +44,7 @@
 			y={photo.y}
 			{size}
 			{hoverSize}
+			visible={photo.placed}
 			hovered={photo.id === hovered}
 			onpointerover={() => onhover(photo.id)}
 			onpointerout={() => hovered === photo.id && onhover(null)}

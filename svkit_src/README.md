@@ -10,6 +10,14 @@ pnpm test       # vitest
 pnpm build      # static site in build/ (adapter-static)
 ```
 
+## Media
+
+`static/` holds generated, web-ready media; the untouched originals live in `originals/` (not served). After changing an original, regenerate with `pnpm assets` (needs ffmpeg with libwebp and libmp3lame):
+
+- avatars → 100px WebP thumbnails for the field (`img/avatar/thumb/`) and ≤600px WebP for the main avatar (`img/avatar/large/`, loaded on demand)
+- `bots.mp4` → same encoding, remuxed with `+faststart` so playback starts before the download ends
+- `ira-theme.mp3` → 128 kbps
+
 To serve from a sub-path (e.g. a portfolio page), set `paths.base` in `vite.config.ts`; all asset URLs go through `asset()` / `resolve()` from `$app/paths`.
 
 ## Structure

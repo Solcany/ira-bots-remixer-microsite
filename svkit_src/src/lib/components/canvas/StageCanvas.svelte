@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { Assets, type Application, type Texture } from 'pixi.js';
 	import { asset } from '$app/paths';
 	import type { AssetPath } from '$app/types';
 	import names from '#lib/data/names.json';
 	import bios from '#lib/data/bios.json';
 	import type { Bot, Step } from '#lib/remixer.svelte.ts';
-	import { packCircles, type Circle, type Size } from '#lib/packing.ts';
+	import { repackCircles, type Circle, type Size } from '#lib/packing.ts';
 	import { range, sample } from '#lib/sample.ts';
 	import { glitch as runGlitch } from '#lib/pixi/glitch.ts';
 	import * as C from '#lib/stage/config.ts';
@@ -36,35 +36,74 @@
 		onpick: (value: string) => void;
 	} = $props();
 
-	const avatarUrls = sample(range(C.AVATAR_FILES), C.PHOTOS.count).map((i) =>
-		asset(`img/avatar/${i}.png` as AssetPath)
-	);
+	// Each avatar has a small thumbnail for the field and a large version for the main avatar, which
+	// is only loaded once it is shown there. A photo's id (and so `bot.avatar`) is its large URL.
+	const avatars = sample(range(C.AVATAR_FILES), C.PHOTOS.count).map((i) => ({
+		id: asset(`img/avatar/large/${i}.webp` as AssetPath),
+		thumb: asset(`img/avatar/thumb/${i}.webp` as AssetPath)
+	}));
+	const thumbOf = new Map(avatars.map((a) => [a.id, a.thumb]));
 	const placeholderUrl = asset(C.PLACEHOLDER_AVATAR);
 	const nameTexts = sample(names, C.NAMES.count);
 	const bioTexts = sample(bios, C.BIOS.count);
 
 	let app = $state.raw<Application | null>(null);
+	/** Thumbnails and the placeholder, preloaded. */
 	let textures = $state.raw<Record<string, Texture> | null>(null);
+	/** Large avatars, loaded on demand. */
+	let large = $state.raw<Record<string, Texture>>({});
+	const requested = new Set<string>();
 	/** Current canvas size; follows the window. */
 	let size = $state.raw<Size | null>(null);
 
-	/** Item positions relative to the canvas centre, so they stay put when the window resizes. */
+	/**
+	 * Item positions relative to the canvas centre, packed for `size`. Between a resize and the
+	 * re-pack that follows it, the field stays anchored to the centre.
+	 */
 	interface Layout {
+		size: Size;
 		photos: Photo[];
 		names: Word[];
 		bios: Word[];
 	}
+	let layout = $state.raw<Layout | null>(null);
 
 	function ready(a: Application) {
 		app = a;
 		size = { width: a.screen.width, height: a.screen.height };
 	}
 
+	$effect(() => {
+		if (app && textures && size && !layout) layout = computeLayout(size, textures);
+	});
+
+	// Re-pack only once resizing has settled, and only for a noticeable change, behind the glitch.
+	let repackTimer: ReturnType<typeof setTimeout> | undefined;
+	onDestroy(() => clearTimeout(repackTimer));
+
+	function resized(next: Size) {
+		size = next;
+		clearTimeout(repackTimer);
+		repackTimer = setTimeout(repack, C.REPACK.debounceMs);
+	}
+
+	function repack() {
+		if (!textures || !size || !layout) return;
+		const dw = Math.abs(size.width - layout.size.width);
+		const dh = Math.abs(size.height - layout.size.height);
+		if (dw < C.REPACK.minChangePx && dh < C.REPACK.minChangePx) return;
+
+		const transition = glitch();
+		onhover(null); // whatever was under the pointer is about to move
+		layout = computeLayout(size, textures, layout);
+		return transition;
+	}
+
 	onMount(() => {
 		// Canvas text is rasterised once, so the font (incl. the Cyrillic subset) must be ready first.
 		const glyphs = [...nameTexts, ...bioTexts, C.DEFAULT_NAME, C.DEFAULT_BIO].join('');
 		Promise.all([
-			Assets.load<Texture>([...avatarUrls, placeholderUrl]),
+			Assets.load<Texture>([...avatars.map((a) => a.thumb), placeholderUrl]),
 			document.fonts.load(`12px "${C.CANVAS_FONT}"`, glyphs)
 		]).then(([loaded]) => {
 			for (const texture of Object.values(loaded)) texture.source.scaleMode = 'nearest';
@@ -73,54 +112,77 @@
 	});
 
 	/**
-	 * Packs once over a field the size of the whole monitor (or the canvas, if larger), so resizing
-	 * the window reveals or crops the same field instead of reshuffling it.
+	 * Packs items into the canvas around the main avatar. Given the `previous` layout, items that
+	 * still fit keep their place; only the ones that would be cut off move into free space (or hide
+	 * when there is none), and hidden ones fill any new room.
 	 */
-	function computeLayout(canvas: Size, textures: Record<string, Texture>): Layout {
-		const screen = {
-			width: Math.max(window.screen.width, canvas.width),
-			height: Math.max(window.screen.height, canvas.height)
-		};
-		const center = { x: screen.width / 2, y: screen.height / 2 };
-		const toOffset = ({ x, y }: Circle) => ({ x: x - center.x, y: y - center.y });
+	function computeLayout(
+		screen: Size,
+		textures: Record<string, Texture>,
+		previous?: Layout
+	): Layout {
+		const center = { x: Math.round(screen.width / 2), y: Math.round(screen.height / 2) };
+		// Every item gets an entry, placed or not, so a re-pack only moves and hides items and never
+		// mounts or destroys them.
+		const place = (spot: Circle | null) =>
+			spot
+				? { x: spot.x - center.x, y: spot.y - center.y, placed: true }
+				: { x: 0, y: 0, placed: false };
+		const spotsOf = (items: (Photo | Word)[] | undefined, count: number, r: number) =>
+			items?.map((item) =>
+				item.placed ? { x: item.x + center.x, y: item.y + center.y, r } : null
+			) ?? Array<null>(count).fill(null);
 		const avatarZone: Circle = { ...center, r: C.MAIN_AVATAR.diameter / 2 };
 		const below = (dy: number): Circle => ({ x: center.x, y: center.y + dy, r: avatarZone.r });
 
-		const photoSpots = packCircles(
-			screen,
+		const pack = (
+			exclusions: Circle[],
+			items: (Photo | Word)[] | undefined,
+			count: number,
+			diameter: number,
+			attempts: number
+		) =>
+			repackCircles(
+				screen,
+				exclusions,
+				spotsOf(items, count, diameter / 2),
+				diameter / 2,
+				attempts
+			);
+
+		const photoSpots = pack(
 			[avatarZone],
-			avatarUrls.length,
-			C.PHOTOS.packingDiameter / 2,
+			previous?.photos,
+			avatars.length,
+			C.PHOTOS.packingDiameter,
 			C.PHOTOS.attempts
 		);
-		const nameSpots = packCircles(
-			screen,
+		const nameSpots = pack(
 			[avatarZone, below(C.NAMES.reservedOffsetY)],
+			previous?.names,
 			nameTexts.length,
-			C.NAMES.packingDiameter / 2,
+			C.NAMES.packingDiameter,
 			C.NAMES.attempts
 		);
-		const bioSpots = packCircles(
-			screen,
+		const bioSpots = pack(
 			[avatarZone, below(C.BIOS.reservedOffsetY)],
+			previous?.bios,
 			bioTexts.length,
-			C.BIOS.packingDiameter / 2,
+			C.BIOS.packingDiameter,
 			C.BIOS.attempts
 		);
 
 		return {
-			photos: photoSpots.map((spot, i) => ({
-				id: avatarUrls[i],
-				texture: textures[avatarUrls[i]],
-				...toOffset(spot)
+			size: screen,
+			photos: avatars.map(({ id, thumb }, i) => ({
+				id,
+				texture: textures[thumb],
+				...place(photoSpots[i])
 			})),
-			names: nameSpots.map((spot, i) => ({ text: nameTexts[i], ...toOffset(spot) })),
-			bios: bioSpots.map((spot, i) => ({ text: bioTexts[i], ...toOffset(spot) }))
+			names: nameTexts.map((text, i) => ({ text, ...place(nameSpots[i]) })),
+			bios: bioTexts.map((text, i) => ({ text, ...place(bioSpots[i]) }))
 		};
 	}
-
-	// Only depends on `app` and `textures`, so it is computed once; resizes just move the centre.
-	const layout = $derived(app && textures ? computeLayout(app.screen, textures) : null);
 
 	/** Enough rings to reach the canvas corners. */
 	const ringCount = $derived(
@@ -136,10 +198,24 @@
 		name: step === 'name' || step === 'bio',
 		bio: step === 'bio'
 	});
+	const mainAvatar = $derived((step === 'photo' && preview) || bot.avatar || placeholderUrl);
+	$effect(() => {
+		const url = mainAvatar;
+		if (url === placeholderUrl || requested.has(url)) return;
+		requested.add(url);
+		Assets.load<Texture>(url).then(
+			(texture) => {
+				texture.source.scaleMode = 'nearest';
+				large = { ...large, [url]: texture };
+			},
+			() => requested.delete(url)
+		);
+	});
+	// The thumbnail stands in until the large version has loaded.
 	const avatarTexture = $derived.by(() => {
 		if (!textures) return null;
-		const url = (step === 'photo' && preview) || bot.avatar || placeholderUrl;
-		return textures[url] ?? textures[placeholderUrl];
+		const thumb = thumbOf.get(mainAvatar);
+		return large[mainAvatar] ?? (thumb && textures[thumb]) ?? textures[placeholderUrl];
 	});
 	const nameText = $derived((step === 'name' && preview) || bot.name || C.DEFAULT_NAME);
 	const bioText = $derived((step === 'bio' && preview) || bot.bio || C.DEFAULT_BIO);
@@ -158,10 +234,10 @@
 		<Loader />
 	{/if}
 
-	<PixiApp background={C.BACKGROUND} onready={ready} onresize={(s) => (size = s)}>
+	<PixiApp background={C.BACKGROUND} onready={ready} onresize={resized}>
 		{#if layout && size && avatarTexture}
 			<!-- everything below is placed relative to the canvas centre -->
-			<Layer x={size.width / 2} y={size.height / 2}>
+			<Layer x={Math.round(size.width / 2)} y={Math.round(size.height / 2)}>
 				<Layer visible={step === 'botnet'} interactive={false}>
 					<Label text={C.BOTNET_TEXT} x={0} y={0} style={C.BOT_NAME_STYLE} />
 				</Layer>

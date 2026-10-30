@@ -9,6 +9,7 @@
 		y,
 		size,
 		hoverSize = size,
+		visible = true,
 		hovered = false,
 		circleMask = false,
 		onpointerover,
@@ -21,6 +22,7 @@
 		/** Width in px; height follows the texture's aspect ratio. */
 		size: number;
 		hoverSize?: number;
+		visible?: boolean;
 		hovered?: boolean;
 		/** Clip the sprite to a circle of diameter `size`. */
 		circleMask?: boolean;
@@ -31,11 +33,12 @@
 
 	const parent = getParent();
 	const sprite = new Sprite({ anchor: 0.5 });
-	const mask = new Graphics();
-	parent.addChild(sprite, mask);
+	/** Created only for sprites that use `circleMask`. */
+	let mask: Graphics | null = null;
+	parent.addChild(sprite);
 	onDestroy(() => {
 		if (!sprite.destroyed) sprite.destroy();
-		if (!mask.destroyed) mask.destroy();
+		if (mask && !mask.destroyed) mask.destroy();
 	});
 
 	sprite.on('pointerover', () => onpointerover?.());
@@ -52,16 +55,27 @@
 	});
 	$effect(() => {
 		sprite.position.set(x, y);
-		mask.position.set(x, y);
+	});
+	$effect(() => {
+		sprite.visible = visible;
 	});
 	$effect(() => {
 		const width = hovered ? hoverSize : size;
 		sprite.setSize(width, (width * texture.height) / texture.width);
 	});
 	$effect(() => {
-		mask.clear();
-		if (circleMask) mask.circle(0, 0, size / 2).fill(0xffffff);
-		sprite.mask = circleMask ? mask : null;
-		mask.visible = circleMask;
+		if (!circleMask) {
+			sprite.mask = null;
+			if (mask) mask.visible = false;
+			return;
+		}
+		mask ??= parent.addChild(new Graphics());
+		mask
+			.clear()
+			.circle(0, 0, size / 2)
+			.fill(0xffffff);
+		mask.position.set(x, y);
+		mask.visible = true;
+		sprite.mask = mask;
 	});
 </script>

@@ -24,10 +24,32 @@ export function packCircles(
 	attempts: number,
 	random: Random = Math.random
 ): Circle[] {
-	const occupied = [...exclusions];
-	const packed: Circle[] = [];
+	const slots = repackCircles(size, exclusions, Array(count).fill(null), r, attempts, random);
+	return slots.filter((c): c is Circle => c !== null);
+}
 
-	for (let i = 0; i < count; i++) {
+/**
+ * Packs one circle per slot, starting from a previous arrangement: a circle from `previous` that
+ * still fits inside `size` keeps its position, and every other slot (moved out of bounds, or
+ * never placed) gets a random free spot. Slots with no room stay `null`.
+ */
+export function repackCircles(
+	size: Size,
+	exclusions: Circle[],
+	previous: (Circle | null)[],
+	r: number,
+	attempts: number,
+	random: Random = Math.random
+): (Circle | null)[] {
+	const occupied = [...exclusions];
+	const slots = previous.map((circle) => {
+		if (!circle || collides(circle, occupied, size)) return null;
+		occupied.push(circle);
+		return circle;
+	});
+
+	return slots.map((kept) => {
+		if (kept) return kept;
 		for (let tries = 0; tries < attempts; tries++) {
 			const circle = {
 				x: Math.floor(random() * size.width),
@@ -36,12 +58,11 @@ export function packCircles(
 			};
 			if (!collides(circle, occupied, size)) {
 				occupied.push(circle);
-				packed.push(circle);
-				break;
+				return circle;
 			}
 		}
-	}
-	return packed;
+		return null;
+	});
 }
 
 function collides(circle: Circle, others: Circle[], size: Size): boolean {

@@ -9,8 +9,8 @@ export const FADE_MS = 170;
 
 export const BACKGROUND = 0x000000;
 
-export const AVATAR_FILES = 384; // static/img/avatar/0.png … 383.png
-export const PLACEHOLDER_AVATAR = 'img/avatar/empty.png' satisfies AssetPath;
+export const AVATAR_FILES = 384; // static/img/avatar/{thumb,large}/0.webp … 383.webp
+export const PLACEHOLDER_AVATAR = 'img/avatar/large/empty.webp' satisfies AssetPath;
 
 export const MAIN_AVATAR = { diameter: 300 };
 
@@ -20,6 +20,10 @@ export const RINGS = {
 	width: 0.5,
 	color: 0x4c4b4b
 };
+
+/** After the window stops resizing for `debounceMs`, the field is re-packed to fit it (behind the
+ * glitch), unless neither side changed by at least `minChangePx`. */
+export const REPACK = { debounceMs: 1000, minChangePx: 80 };
 
 export const PHOTOS = {
 	count: 300,
