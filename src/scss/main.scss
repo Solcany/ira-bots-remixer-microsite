@@ -42,6 +42,13 @@ $H1-color: #fff;
 html,body {
 	height: 100%;
 	margin: 0;
+}
+
+// box-sizing base rule previously provided by tachyons
+a, article, aside, blockquote, body, code, dd, div, dl, dt, fieldset, figcaption, figure, footer, form,
+h1, h2, h3, h4, h5, h6, header, html, legend, li, main, nav, ol, p, pre, section, table, td, textarea, th, tr, ul,
+input[type=email], input[type=number], input[type=password], input[type=tel], input[type=text], input[type=url] {
+	box-sizing: border-box;
 }	
 
 
@@ -267,6 +274,11 @@ nav {
 
 	&.text-content-nav {
 		padding-top: 20px; 
+
+		// spacing between nav buttons (was tachyons' mr2)
+		button[type=button].link:not(:last-child) {
+			margin-right: .5rem;
+		}
 	}
 
 	&.footer-nav {

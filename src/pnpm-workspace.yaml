@@ -1,0 +1,3 @@
+allowBuilds:
+  # sass --watch uses its prebuilt per-platform binary; the source build script isn't needed
+  '@parcel/watcher': false
